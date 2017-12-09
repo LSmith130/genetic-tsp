@@ -1004,9 +1004,84 @@ namespace TSP
             return results;
         }
 
+        public class Chromosome
+        {
+            private ArrayList route;
+            private double fitness;
+            public Chromosome(TSPSolution sol)
+            {
+                this.route = sol.Route;
+                this.fitness = sol.costOfRoute();
+            }
+        }
+
+        public List<Chromosome> weighted_dice(List<Chromosome> solutions)
+        {
+            //prune here to designated number
+            return new List<Chromosome>();
+        }
+
+        public class intpair
+        {
+            public int x;
+            public int y;
+            public intpair (int x,int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        public List<intpair> pair_mates(int size)
+        {
+            return new List<intpair>();
+        }
+
+        public List<Chromosome> crossover_all(List<Chromosome> pop, List<intpair> pairs)
+        {
+            //return new generation
+            return new List<Chromosome>();
+        }
+
+        public List<Chromosome> mutate_all(List<Chromosome> pop)
+        {
+            //return new generation
+            return new List<Chromosome>();
+        }
+
         public string[] fancySolveProblem()
         {
             string[] results = new string[3];
+            for (int i = 0; i < Cities.Length; i++)
+            {
+
+            }
+                
+            //Generating initial solutions
+            int INITNUM = 10;
+            List<Chromosome> currentpop = new List<Chromosome>();
+            for(int i = 0; i < INITNUM; i++)
+            {
+                defaultSolveProblem();
+                currentpop.Add(new Chromosome(bssf));
+            }
+
+            bool done = false; //change to time limit
+            while (!done)
+            {
+
+                //Dice / choosing parents(using dice) (ends up pruning to same number every time)
+                //Pair mates randomly = list of intpairs
+                //Crossover_all
+                //Mutate_all
+                //save best solution
+            }
+
+
+
+
+
+            
 
             // TODO: Add your implementation for your advanced solver here.
 
