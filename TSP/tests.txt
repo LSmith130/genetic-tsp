@@ -1,0 +1,38 @@
+  //dummy test of cost matrix, will eventually delete
+            /*
+             //dummy nodes test
+                double[,] cost = new double[3, 3];
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        cost[i, j] = i * j + 1;
+                    }
+                }
+                
+                CostMatrix c1 = new CostMatrix(cost, 0);
+                Console.WriteLine("Original cost matrix");
+                Console.WriteLine(c1.ToString());
+
+                CostMatrix newcost = reduceMatrix(c1, 1, 1);
+                Console.WriteLine("Reduced cost matrix");
+                Console.WriteLine(newcost.ToString());
+
+                ArrayList nodes = new ArrayList();
+                for (int i = 0; i < 4; i++)
+                {
+                    int[] dummyroute = { 1 };
+                    stateNode n = new stateNode(i,dummyroute,newcost);
+                    Console.WriteLine(i.ToString() + " : " + n.getKey().ToString());
+                    nodes.Add(n);
+                }
+
+                PriorityQueue pq = new PriorityQueue(nodes);
+                int x = pq.deletemin();
+                Console.WriteLine("min: " + x.ToString());
+                for(int i = 0; i < pq.getEnd(); i++)
+                {
+                    Console.WriteLine(pq.getAtIdx(i));
+                }
+                
+            */

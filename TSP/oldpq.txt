@@ -1,0 +1,340 @@
+ public class PriorityQueue
+            {
+                //protected List<stateNode> nodes;
+                protected ArrayList nodes;
+                protected int[] priorityQ;
+                private int[] revPriorityQ;
+                protected int pq_length;
+                //protected int startnode;
+                
+                public PriorityQueue(ArrayList nodes)
+                {
+                    this.nodes = nodes;
+                    pq_length = nodes.Count;
+                    makequeue();
+                }
+
+                public double getLength()
+                {
+                    return pq_length;
+                }
+                
+                public stateNode getNode(int idx)
+                {
+                    return (stateNode) nodes[idx];
+                }
+                public double getAtIdx(int i)
+                {
+                    return priorityQ[i];
+                }
+                public int getNodeCount()
+                {
+                    return nodes.Count;
+                }
+                public void nullNode(int idx)
+                {
+                    nodes[idx] = null;
+                }
+               
+
+                public void makequeue() //overall O(n log n)
+                {
+                    priorityQ = new int[nodes.Count];
+                    revPriorityQ = new int[nodes.Count];
+                    for (int i = 0; i < nodes.Count; i++) //O(n)
+                    {
+                        priorityQ[i] = i;
+                        revPriorityQ[i] = i;
+                    }
+
+                    for (int i = nodes.Count - 1; i >= 0; i--) //O(n log n)
+                    {
+                        siftdown(priorityQ[i], i);
+                    }
+
+                }
+
+                public void addNode(stateNode node)
+                {
+                    nodes.Add(node);
+                    priorityQ = priorityQ.Concat(new[] { nodes.Count - 1 }).ToArray();
+                    revPriorityQ = revPriorityQ.Concat(new[] { nodes.Count - 1 }).ToArray();
+                    pq_length++;
+                    insert(nodes.Count - 1);
+                }
+
+                public stateNode deletemin() //O(log n) due to the big O of siftdown
+                {
+                    if (pq_length == 0)
+                    {
+                        return null; 
+                    }
+                    else
+                    {
+                        int x = priorityQ[0];
+                        pq_length--; //needs to be decremented for internal of siftdown, so that the last position isn't used now that it's being shifted
+                        siftdown(priorityQ[pq_length], 0); //techincially still needed the original last position here though
+                        priorityQ[pq_length] = -1;
+                        revPriorityQ[x] = -1;
+
+                        return (stateNode)nodes[x];
+                    }
+                }
+
+                public void decreasekey(int n) //O(log n) due to the big O of bubbleup
+                {
+                    int idx = revPriorityQ[n];
+                    bubbleup(n, idx);
+                }
+
+                public void bubbleup(int x, int i)
+                {
+                    int p = (Convert.ToInt32(Math.Ceiling(i / 2d))) - 1;
+                    if(p >= 0) {
+                        stateNode node = (stateNode)nodes[x];
+                        stateNode parent = (stateNode)nodes[priorityQ[p]];
+                        while (p >= 0 && i > 0 && parent.getKey() > node.getKey()) //O(log n) due to halving p every time
+                        {
+                            priorityQ[i] = priorityQ[p];
+                            revPriorityQ[priorityQ[p]] = i;
+                            i = p;
+                            p = Convert.ToInt32(Math.Ceiling(i / 2d)) - 1;
+                            if(p >= 0) {  parent = (stateNode)nodes[priorityQ[p]]; }
+                        }
+                    }
+                    
+                    priorityQ[i] = x;
+                    revPriorityQ[x] = i;
+                }
+
+                public void siftdown(int x, int i)
+                {
+                    int c = minchild(i);
+                    stateNode node = (stateNode)nodes[x];
+                    stateNode child = (stateNode) nodes[priorityQ[c]];
+                    while (c != 0 && child.getKey() < node.getKey()) //O(log n) due to minchild moving along the height of the tree, or log n
+                    {
+                        priorityQ[i] = priorityQ[c];
+                        revPriorityQ[priorityQ[c]] = i;
+                        i = c;
+                        c = minchild(i);
+                        child = (stateNode)nodes[priorityQ[c]];
+                    }
+                    priorityQ[i] = x;
+                    revPriorityQ[x] = i;
+                }
+
+                public void insert(int x) //O(log n) due to the big O of bubbleup
+                {
+                    bubbleup(x, pq_length-1);
+                }
+
+                public int minchild(int i)
+                {
+                    if ((2 * i + 1) > pq_length - 1)
+                    {
+                        return 0; //no children
+                    }
+                    else
+                    {
+                        int left_idx = 2 * i + 1; //+1 to account for 0-based indexing
+                        stateNode leftchild = (stateNode)nodes[priorityQ[left_idx]]; //priorityq index -> nodes index -> actual node 
+                        double leftchild_key = leftchild.getKey();
+
+                        int right_idx = Math.Min(pq_length - 1, (2 * i + 2)); //+2 to account for 0-based indexing
+                        stateNode rightchild = (stateNode)nodes[priorityQ[right_idx]];
+                        double rightchild_key = rightchild.getKey();
+
+                        if (rightchild_key < leftchild_key)
+                        {
+                            return right_idx;
+                        }
+                        else
+                        {
+                            return left_idx;
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+
+
+			      public class PriorityQueue
+            {
+                //protected List<stateNode> nodes;
+                protected ArrayList nodes;
+                protected ArrayList priorityQ;
+                protected int pq_length;
+                //protected int startnode;
+                
+                public PriorityQueue(ArrayList nodes)
+                {
+                    this.priorityQ = (ArrayList)nodes.Clone();
+                    pq_length = nodes.Count;
+                    //makequeue(); not necessary for this problem; must reimplement if needed
+                }
+
+                public double getLength()
+                {
+                    return pq_length;
+                }
+                
+                public stateNode getNode(int idx)
+                {
+                    return (stateNode) nodes[idx];
+                }
+                /*
+                public double getAtIdx(int i)
+                {
+                    return priorityQ[i];
+                }
+                */
+                public int getNodeCount()
+                {
+                    return nodes.Count;
+                }
+                public void nullNode(int idx)
+                {
+                    nodes[idx] = null;
+                }
+               
+                /*
+                public void makequeue() //overall O(n log n)
+                {
+                    priorityQ = new int[nodes.Count];
+                    for (int i = 0; i < nodes.Count; i++) //O(n)
+                    {
+                        priorityQ[i] = i;
+                    }
+
+                    for (int i = nodes.Count - 1; i >= 0; i--) //O(n log n)
+                    {
+                        siftdown(priorityQ[i], i);
+                    }
+
+                }
+                
+                
+                public void addNode(stateNode node)
+                {
+                    //priorityQ = priorityQ.Concat(new[] { nodes.Count - 1 }).ToArray();
+                    pq_length++;
+                    insert(node);
+                }
+                */
+                public stateNode deletemin() //O(log n) due to the big O of siftdown
+                {
+                    if (pq_length == 0)
+                    {
+                        return null; 
+                    }
+                    else
+                    {
+                        stateNode node = (stateNode)priorityQ[0];
+                        stateNode lastnode = (stateNode)priorityQ[pq_length - 1];
+                        /*
+                        if (pq_length == 1)
+                        {
+                            priorityQ[pq_length-1] = null;
+                        }
+                        else
+                        {
+                            priorityQ[pq_length] = null;
+                        }
+                        */
+                        
+                        pq_length--; //needs to be decremented for internal of siftdown, so that the last position isn't used now that it's being shifted
+                        
+                        if(pq_length > 0)
+                        {
+                            siftdown(lastnode, 0); //techincially still needed the original last position here though
+                        }
+                        priorityQ[pq_length] = null;
+
+                        return node;
+                    }
+                }
+
+                
+                public void bubbleup(stateNode node, int i)
+                {
+                    int p = (Convert.ToInt32(Math.Ceiling(i / 2d))) - 1;
+                    if(p >= 0) {
+                        stateNode parent = (stateNode)priorityQ[p];
+                        while (p >= 0 && i > 0 && parent.getKey() > node.getKey()) //O(log n) due to halving p every time
+                        {
+                            priorityQ[i] = priorityQ[p];
+                            i = p;
+                            p = Convert.ToInt32(Math.Ceiling(i / 2d)) - 1;
+                            if(p >= 0) {  parent = (stateNode)priorityQ[p]; }
+                        }
+                    }
+                    
+                    priorityQ[i] = node;
+                }
+
+                public void siftdown(stateNode node, int i)
+                {
+                    int c = minchild(i);
+                    stateNode child = (stateNode)priorityQ[c];
+                    while (c != 0 && child.getKey() < node.getKey()) //O(log n) due to minchild moving along the height of the tree, or log n
+                    {
+                        priorityQ[i] = priorityQ[c];
+                        i = c;
+                        c = minchild(i);
+                        child = (stateNode)priorityQ[c];
+                    }
+                    priorityQ[i] = node;
+                }
+
+                public void insert(stateNode n) //O(log n) due to the big O of bubbleup
+                {
+                    if(pq_length == 0)
+                    {
+                        priorityQ[pq_length] = n;
+                    }
+                    else
+                    {
+                        priorityQ.Add(n);
+                    }
+                    
+                    pq_length++;
+                    if(pq_length > 1)
+                    {
+                        bubbleup(n, pq_length - 1);
+                    }
+                }
+
+                public int minchild(int i)
+                {
+                    if ((2 * i + 1) > pq_length - 1)
+                    {
+                        return 0; //no children
+                    }
+                    else
+                    {
+                        int left_idx = 2 * i + 1; //+1 to account for 0-based indexing
+                        stateNode leftchild = (stateNode)priorityQ[left_idx]; //priorityq index -> nodes index -> actual node 
+                        double leftchild_key = leftchild.getKey();
+
+                        int right_idx = Math.Min(pq_length - 1, (2 * i + 2)); //+2 to account for 0-based indexing
+                        stateNode rightchild = (stateNode)priorityQ[right_idx];
+                        double rightchild_key = rightchild.getKey();
+
+                        if (rightchild_key < leftchild_key)
+                        {
+                            return right_idx;
+                        }
+                        else
+                        {
+                            return left_idx;
+                        }
+                    }
+                }
+
+
+            }
