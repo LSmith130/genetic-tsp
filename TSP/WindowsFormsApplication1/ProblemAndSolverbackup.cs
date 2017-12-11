@@ -1013,6 +1013,14 @@ namespace TSP
                 this.route = sol.Route;
                 this.fitness = sol.costOfRoute();
             }
+            public double getFitness()
+            {
+                return fitness;
+            }
+            public ArrayList getRoute()
+            {
+                return route;
+            }
         }
 
         public List<Chromosome> weighted_dice(List<Chromosome> solutions)
@@ -1051,11 +1059,12 @@ namespace TSP
 
         public string[] fancySolveProblem()
         {
-            string[] results = new string[3];
-            for (int i = 0; i < Cities.Length; i++)
-            {
+            Stopwatch timer = new Stopwatch();
+            TimeSpan TIMELIMIT = new TimeSpan(0, 0, 60);
 
-            }
+            int solution_count = 0;
+
+            string[] results = new string[3];
                 
             //Generating initial solutions
             int INITNUM = 10;
@@ -1066,28 +1075,32 @@ namespace TSP
                 currentpop.Add(new Chromosome(bssf));
             }
 
-            bool done = false; //change to time limit
-            while (!done)
+            //loop
+            timer.Start();
+            while (timer.Elapsed.CompareTo(TIMELIMIT) <= 0)
             {
-
-                //Dice / choosing parents(using dice) (ends up pruning to same number every time)
-                //Pair mates randomly = list of intpairs
-                //Crossover_all
-                //Mutate_all
-                //save best solution
+                currentpop = weighted_dice(currentpop);
+                List<intpair> pairlist = pair_mates(currentpop.Count);
+                currentpop = crossover_all(currentpop, pairlist);
+                currentpop = mutate_all(currentpop);
+                //need to figure out how to fix the fact that this will save routes that have a chance of getting deleted
+                foreach (Chromosome sol in currentpop)
+                {
+                    if (sol.getFitness() < bssf.costOfRoute())
+                    {
+                        bssf = new TSPSolution(sol.getRoute()); //assuming route is ArrayList of Cities
+                        solution_count++;
+                    }
+                }
+                
             }
 
-
-
-
-
+            timer.Stop();
+            TimeSpan el_time = timer.Elapsed;
             
-
-            // TODO: Add your implementation for your advanced solver here.
-
-            results[COST] = "not implemented";    // load results into array here, replacing these dummy values
-            results[TIME] = "-1";
-            results[COUNT] = "-1";
+            results[COST] = bssf.costOfRoute().ToString();    
+            results[TIME] = el_time.ToString();
+            results[COUNT] = solution_count.ToString();
 
             return results;
         }
