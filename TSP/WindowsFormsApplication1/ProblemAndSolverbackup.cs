@@ -1021,6 +1021,10 @@ namespace TSP
             {
                 return route;
             }
+            public void reCalcFitness()
+            {
+                
+            }
         }
 
         public List<Chromosome> weighted_dice(List<Chromosome> solutions)
@@ -1088,7 +1092,43 @@ namespace TSP
         public List<Chromosome> mutate_all(List<Chromosome> pop)
         {
             //return new generation
-            return new List<Chromosome>();
+            int count = pop.Count;//Size wouldn't work since it grows.
+            for(int i = 0; i < count; ++i)
+            {
+                pop.Add(mutateChromosome(pop[i]));
+            }
+            return pop;
+        }
+        private bool invalidNum(double val)
+        {
+            return !(double.IsPositiveInfinity(val) || double.IsNaN(val));
+        }
+        private Chromosome mutateChromosome(Chromosome chromosome)
+        {
+            Chromosome result = new Chromosome(new TSPSolution(chromosome.getRoute()));
+            Random rand = new Random();
+            int max = chromosome.getRoute().Count / 10;
+            if (max < 1) max = 1;
+            int numberOfMutations = rand.Next(1,max);//Dont want too many mutations.
+            //numberOfMutations=(int)Math.Sqrt(numberOfMutations);
+            if (numberOfMutations <= 0) numberOfMutations = 1;
+            int x, y;
+            City cx, cy,swap;
+            ArrayList route = result.getRoute();
+            for (int i = 0; i < numberOfMutations; ++i)
+            {
+                do
+                {        
+                    x = rand.Next(1, route.Count);
+                    y = rand.Next(1, route.Count);
+                    cx = (City)route[x];
+                    cy = (City)route[y];
+                } while (invalidNum(cx.costToGetTo((City)Route[y + 1])) || invalidNum(cy.costToGetTo((City)Route[x + 1])));
+                swap = (City)route[x];
+                route[x] = route[y];
+                route[y] = swap;
+            }
+            return result;
         }
 
         public string[] fancySolveProblem()
