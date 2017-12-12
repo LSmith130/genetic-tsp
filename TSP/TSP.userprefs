@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{8AE870FA-ED7A-4D15-8944-F737939E84BA}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WindowsFormsApplication1/ProblemAndSolverbackup.cs">
+    <Files>
+      <File FileName="WindowsFormsApplication1/ProblemAndSolverbackup.cs" Line="1075" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.TSP PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>
