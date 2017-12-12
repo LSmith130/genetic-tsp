@@ -1139,7 +1139,7 @@ namespace TSP
         public List<intpair> pair_mates(int size, int numchildren)
         {
             //brain dead check for threshold for maintaining unique pairs
-            if (numchildren > size / 2)
+            if (numchildren > size)
             {
                 return null;
             }
@@ -1150,13 +1150,11 @@ namespace TSP
                 for(int j = 0; j < numchildren; j++)
                 {
                     int mate = rand.Next(size - 1);
-                    intpair pair = new intpair(i, mate);
-                    while (mate == i || pairs.Contains(pair)) { //need to implement intpair as iComparable
+                    while (mate == i) { 
                         //Console.WriteLine("invalid");
                         mate = rand.Next(size - 1);
-                        pair = new intpair(i, mate);
                     }
-                    pairs.Add(pair);
+                    pairs.Add(new intpair(i, mate));
                 }
             }
 
