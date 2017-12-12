@@ -1007,7 +1007,7 @@ namespace TSP
         public class Chromosome
         {
             private ArrayList route;
-            private double fitness;
+            public double fitness;
             public Chromosome(TSPSolution sol)
             {
                 this.route = sol.Route;
@@ -1029,8 +1029,99 @@ namespace TSP
 
         public List<Chromosome> weighted_dice(List<Chromosome> solutions)
         {
-            //prune here to designated number
-            return new List<Chromosome>();
+            //order the list of solutions
+            List<Chromosome> winners = new List<Chromosome>();
+            //order the solutions in ascending order
+            List<Chromosome> SortedList = solutions.OrderBy(o=> o.fitness).ToList();
+            Random random = new Random();
+
+            int ranNum1 = 0;
+            while (winners.Count == 4)
+            {
+                ranNum1 = random.Next(0, 1000);
+                if (ranNum1 == 1)
+                {
+                    if (SortedList[10] != null)
+                    {
+                        winners.Add(SortedList[10]);
+                    }
+                    SortedList[10] = null;
+                }
+                else if (ranNum1 <= 3)
+                {
+
+                    if (SortedList[9] != null)
+                    {
+                        winners.Add(SortedList[9]);
+                    }
+                    SortedList[9] = null;
+                }
+                else if (ranNum1 <= 6)
+                {
+                    if (SortedList[8] != null)
+                    {
+                        winners.Add(SortedList[8]);
+                    }
+                    SortedList[8] = null;
+                }
+                else if (ranNum1 <= 11)
+                {
+                    if (SortedList[7] != null)
+                    {
+                        winners.Add(SortedList[7]);
+                    }
+                    SortedList[7] = null;
+                }
+                else if (ranNum1 <= 18)
+                {
+                    if (SortedList[6] != null)
+                    {
+                        winners.Add(SortedList[6]);
+                    }
+                    SortedList[6] = null;
+                }
+                else if (ranNum1 <= 27)
+                {
+                    if (SortedList[5] != null)
+                    {
+                        winners.Add(SortedList[5]);
+                    }
+                    SortedList[5] = null;
+                }
+                else if (ranNum1 <= 40)
+                {
+                    if (SortedList[4] != null)
+                    {
+                        winners.Add(SortedList[4]);
+                    }
+                    SortedList[4] = null;
+                }
+                else if (ranNum1 <= 56)
+                {
+                    if (SortedList[3] != null)
+                    {
+                        winners.Add(SortedList[3]);
+                    }
+                    SortedList[3] = null;
+                }
+                else if (ranNum1 <= 76)
+                {
+                    if (SortedList[2] != null)
+                    {
+                        winners.Add(SortedList[2]);
+                    }
+                    SortedList[2] = null;
+                }
+                else if (ranNum1 <= 100)
+                {
+                    if (SortedList[1] != null)
+                    {
+                        winners.Add(SortedList[1]);
+                    }
+                    SortedList[1] = null;
+                }
+            }
+            return winners;
         }
 
         public class intpair
@@ -1085,8 +1176,53 @@ namespace TSP
 
         public List<Chromosome> crossover_all(List<Chromosome> pop, List<intpair> pairs)
         {
-            //return new generation
-            return new List<Chromosome>();
+            
+            var newPop = new List<Chromosome>();
+            foreach (var pair in pairs) {
+                newPop.Add(mate(pop[pair.x], pop[pair.y]));
+            }
+            return newPop;
+        }
+
+        public Chromosome mate(Chromosome father, Chromosome mother)
+        {
+            List<City> child = new List<City>(father.getRoute().Count);
+			var random = new Random();
+
+			do
+            {
+                child.Clear();
+                var splitPoint = random.Next() % (father.getRoute().Count / 2) + father.getRoute().Count / 4;
+
+                for (int i = 0; i < splitPoint; i++)
+                {
+                    child.Add((City)father.getRoute()[i]);
+                }
+                for (int i = splitPoint; i < mother.getRoute().Count; i++)
+                {
+                    child.Add((City)mother.getRoute()[i]);
+                }
+
+                var groups = child.GroupBy(x => x);
+                var duplicates = groups.Where(x => x.Count() > 1).Select(x => x.Key);
+                var used = groups.Select(x => x.Key);
+                var unused = Cities.Intersect(used).OrderBy(x => random.Next());
+                var replaced = 0;
+                child = child.Select(city => duplicates.Contains(city) ? unused.ElementAt(replaced++) : city).ToList(); 
+
+            } while (!isValid(child));
+
+            return new Chromosome(new TSPSolution(new ArrayList(child)));
+        }
+
+        public bool isValid(List<City> c) {
+            for (var i = 0; i < c.Count - 1; i++) {
+
+                if (Double.IsPositiveInfinity(c[i].costToGetTo(c[i + 1]))) {
+                    return false;
+                }
+            }
+            return !Double.IsPositiveInfinity(c[c.Count - 1].costToGetTo(c[0]));
         }
 
         public List<Chromosome> mutate_all(List<Chromosome> pop)
@@ -1123,7 +1259,12 @@ namespace TSP
                     y = rand.Next(1, route.Count);
                     cx = (City)route[x];
                     cy = (City)route[y];
-                } while (invalidNum(cx.costToGetTo((City)Route[y + 1])) || invalidNum(cy.costToGetTo((City)Route[x + 1])));
+                } while (
+                (x!=0&&invalidNum(((City)(route[x-1])).costToGetTo(cy)))|| // x.previous to y
+                invalidNum(cx.costToGetTo((City)Route[y + 1])) || // x to y.next
+                (y!=0&&invalidNum((((City)(route[y-1])).costToGetTo(cx))))|| // y.previous to x
+                invalidNum(cy.costToGetTo((City)Route[x + 1])) // y to x.next
+                );
                 swap = (City)route[x];
                 route[x] = route[y];
                 route[y] = swap;

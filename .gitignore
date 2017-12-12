@@ -1,3 +1,5 @@
 TSP/WindowsFormsApplication1/bin/*
 TSP/WindowsFormsApplication1/obj/*
 *.exe
+TSP/TSP.userprefs
+TSP/packages/repositories.config
