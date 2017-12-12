@@ -1027,99 +1027,87 @@ namespace TSP
             }
         }
 
-        public List<Chromosome> weighted_dice(List<Chromosome> solutions)
+        public List<Chromosome> weighted_dice(List<Chromosome> solutions, int returnNumber)
         {
+            //function will take in n number of solutions 
+            //and pick 10 and send them back
+            //the rest will be pruned
+
             //order the list of solutions
             List<Chromosome> winners = new List<Chromosome>();
             //order the solutions in ascending order
-            List<Chromosome> SortedList = solutions.OrderBy(o=> o.fitness).ToList();
+            List<Chromosome> SortedList = solutions.OrderBy(o => o.fitness).ToList();
             Random random = new Random();
-
+            
+            int size = solutions.Count;
+            if (size <= 10)
+            {
+                return SortedList;
+            }
+            else if (size < 20) //if number of solutions is small, just pass back the best ten
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    winners.Add(SortedList[i]);
+                }
+                return winners;
+            }
+            //other wise find 10 programatically 
             int ranNum1 = 0;
-            while (winners.Count == 4)
+
+            int num1 = size / 2 / 2;
+            int num2 = size / 2;
+            int num3 = num2 + num1;
+            int num4 = size;
+
+            
+
+            //Runs faster when list passed in is large
+            while (winners.Count < returnNumber) //taking the best 10
             {
                 ranNum1 = random.Next(0, 1000);
-                if (ranNum1 == 1)
-                {
-                    if (SortedList[10] != null)
-                    {
-                        winners.Add(SortedList[10]);
-                    }
-                    SortedList[10] = null;
-                }
-                else if (ranNum1 <= 3)
-                {
 
-                    if (SortedList[9] != null)
-                    {
-                        winners.Add(SortedList[9]);
-                    }
-                    SortedList[9] = null;
-                }
-                else if (ranNum1 <= 6)
+                if (ranNum1 <= 50)      //5% chance going into the bottom 1/4
                 {
-                    if (SortedList[8] != null)
+                    //bottom 4/4
+                    int rand2 = random.Next(num3, num4);
+                    if (SortedList[rand2] != null)
                     {
-                        winners.Add(SortedList[8]);
+                        winners.Add(SortedList[rand2]);
+                        SortedList[rand2] = null;
                     }
-                    SortedList[8] = null;
                 }
-                else if (ranNum1 <= 11)
+                else if (ranNum1 <= 100)        //10% chance of going into the bottom 2/4th quatile
                 {
-                    if (SortedList[7] != null)
+                    //bottom 3/4
+                    int rand3 = random.Next(num2, num3);
+                    if (SortedList[rand3] != null)
                     {
-                        winners.Add(SortedList[7]);
+                        winners.Add(SortedList[rand3]);
+                        SortedList[rand3] = null;
                     }
-                    SortedList[7] = null;
                 }
-                else if (ranNum1 <= 18)
+                else if (ranNum1 <= 150)        //15% chance going into the 2nd best quartile
                 {
-                    if (SortedList[6] != null)
+                    //bottom 2/4
+                    int rand4 = random.Next(num1, num2);
+                    if (SortedList[rand4] != null)
                     {
-                        winners.Add(SortedList[6]);
+                        winners.Add(SortedList[rand4]);
+                        SortedList[rand4] = null;
                     }
-                    SortedList[6] = null;
                 }
-                else if (ranNum1 <= 27)
+                else if (ranNum1 < 1000)        //70% chance going into the best quartile
                 {
-                    if (SortedList[5] != null)
+                    //most likely 1/4
+                    int rand5 = random.Next(0, num1);
+                    if (SortedList[rand5] != null)
                     {
-                        winners.Add(SortedList[5]);
+                        winners.Add(SortedList[rand5]);
+                        SortedList[rand5] = null;
                     }
-                    SortedList[5] = null;
                 }
-                else if (ranNum1 <= 40)
-                {
-                    if (SortedList[4] != null)
-                    {
-                        winners.Add(SortedList[4]);
-                    }
-                    SortedList[4] = null;
-                }
-                else if (ranNum1 <= 56)
-                {
-                    if (SortedList[3] != null)
-                    {
-                        winners.Add(SortedList[3]);
-                    }
-                    SortedList[3] = null;
-                }
-                else if (ranNum1 <= 76)
-                {
-                    if (SortedList[2] != null)
-                    {
-                        winners.Add(SortedList[2]);
-                    }
-                    SortedList[2] = null;
-                }
-                else if (ranNum1 <= 100)
-                {
-                    if (SortedList[1] != null)
-                    {
-                        winners.Add(SortedList[1]);
-                    }
-                    SortedList[1] = null;
-                }
+
             }
             return winners;
         }
@@ -1285,15 +1273,15 @@ namespace TSP
             List<Chromosome> currentpop = new List<Chromosome>();
             for(int i = 0; i < INITNUM; i++)
             {
-                defaultSolveProblem();
-                currentpop.Add(new Chromosome(bssf));
+                String[] solution = defaultSolveProblem();
+                currentpop.Add(new Chromosome(bssf)); 
             }
             
             //loop
             timer.Start();
             while (timer.Elapsed.CompareTo(TIMELIMIT) <= 0)
             {
-                currentpop = weighted_dice(currentpop);
+                currentpop = weighted_dice(currentpop, INITNUM);
                 List<intpair> pairlist = pair_mates(currentpop.Count,NUMCHILDREN);
                 currentpop = crossover_all(currentpop, pairlist);
                 currentpop = mutate_all(currentpop);
