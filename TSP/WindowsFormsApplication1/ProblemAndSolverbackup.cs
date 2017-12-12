@@ -1134,7 +1134,7 @@ namespace TSP
         public string[] fancySolveProblem()
         {
             Stopwatch timer = new Stopwatch();
-            TimeSpan TIMELIMIT = new TimeSpan(0, 0, 3);
+            TimeSpan TIMELIMIT = new TimeSpan(0, 0, time_limit/1000);
             int NUMCHILDREN = 2;
 
             int solution_count = 0;
