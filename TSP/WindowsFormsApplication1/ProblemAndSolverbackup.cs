@@ -1007,7 +1007,7 @@ namespace TSP
         public class Chromosome
         {
             private ArrayList route;
-            private double fitness;
+            public double fitness;
             public Chromosome(TSPSolution sol)
             {
                 this.route = sol.Route;
@@ -1017,8 +1017,99 @@ namespace TSP
 
         public List<Chromosome> weighted_dice(List<Chromosome> solutions)
         {
-            //prune here to designated number
-            return new List<Chromosome>();
+            //order the list of solutions
+            List<Chromosome> winners = new List<Chromosome>();
+            //order the solutions in ascending order
+            List<Chromosome> SortedList = solutions.OrderBy(o=> o.fitness).ToList();
+            Random random = new Random();
+
+            int ranNum1 = 0;
+            while (winners.Count == 4)
+            {
+                ranNum1 = random.Next(0, 1000);
+                if (ranNum1 == 1)
+                {
+                    if (SortedList[10] != null)
+                    {
+                        winners.Add(SortedList[10]);
+                    }
+                    SortedList[10] = null;
+                }
+                else if (ranNum1 <= 3)
+                {
+
+                    if (SortedList[9] != null)
+                    {
+                        winners.Add(SortedList[9]);
+                    }
+                    SortedList[9] = null;
+                }
+                else if (ranNum1 <= 6)
+                {
+                    if (SortedList[8] != null)
+                    {
+                        winners.Add(SortedList[8]);
+                    }
+                    SortedList[8] = null;
+                }
+                else if (ranNum1 <= 11)
+                {
+                    if (SortedList[7] != null)
+                    {
+                        winners.Add(SortedList[7]);
+                    }
+                    SortedList[7] = null;
+                }
+                else if (ranNum1 <= 18)
+                {
+                    if (SortedList[6] != null)
+                    {
+                        winners.Add(SortedList[6]);
+                    }
+                    SortedList[6] = null;
+                }
+                else if (ranNum1 <= 27)
+                {
+                    if (SortedList[5] != null)
+                    {
+                        winners.Add(SortedList[5]);
+                    }
+                    SortedList[5] = null;
+                }
+                else if (ranNum1 <= 40)
+                {
+                    if (SortedList[4] != null)
+                    {
+                        winners.Add(SortedList[4]);
+                    }
+                    SortedList[4] = null;
+                }
+                else if (ranNum1 <= 56)
+                {
+                    if (SortedList[3] != null)
+                    {
+                        winners.Add(SortedList[3]);
+                    }
+                    SortedList[3] = null;
+                }
+                else if (ranNum1 <= 76)
+                {
+                    if (SortedList[2] != null)
+                    {
+                        winners.Add(SortedList[2]);
+                    }
+                    SortedList[2] = null;
+                }
+                else if (ranNum1 <= 100)
+                {
+                    if (SortedList[1] != null)
+                    {
+                        winners.Add(SortedList[1]);
+                    }
+                    SortedList[1] = null;
+                }
+            }
+            return winners;
         }
 
         public class intpair
