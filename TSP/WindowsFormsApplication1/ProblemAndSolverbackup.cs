@@ -1013,6 +1013,18 @@ namespace TSP
                 this.route = sol.Route;
                 this.fitness = sol.costOfRoute();
             }
+            public double getFitness()
+            {
+                return fitness;
+            }
+            public ArrayList getRoute()
+            {
+                return route;
+            }
+            public void reCalcFitness()
+            {
+                
+            }
         }
 
         public List<Chromosome> weighted_dice(List<Chromosome> solutions)
@@ -1121,32 +1133,154 @@ namespace TSP
                 this.x = x;
                 this.y = y;
             }
+
         }
 
-        public List<intpair> pair_mates(int size)
+        public List<intpair> pair_mates(int size, int numchildren)
         {
-            return new List<intpair>();
+            //brain dead check for threshold for maintaining unique pairs
+            if (numchildren > size / 2)
+            {
+                return null;
+            }
+            Random rand = new Random();
+            List<intpair> pairs = new List<intpair>();
+            for(int i = 0; i < size; i++)
+            {
+                for(int j = 0; j < numchildren; j++)
+                {
+                    int mate = rand.Next(size - 1);
+                    intpair pair = new intpair(i, mate);
+                    while (mate == i || pairs.Contains(pair)) { //need to implement intpair as iComparable
+                        //Console.WriteLine("invalid");
+                        mate = rand.Next(size - 1);
+                        pair = new intpair(i, mate);
+                    }
+                    pairs.Add(pair);
+                }
+            }
+
+            //for testing
+            /*
+            Console.WriteLine("pairs");
+            foreach (intpair p in pairs)
+            {
+                int x = p.x;
+                int y = p.y;
+                Console.WriteLine(x.ToString() + " " + y.ToString());
+            }
+            */
+            return pairs;
+            
         }
 
         public List<Chromosome> crossover_all(List<Chromosome> pop, List<intpair> pairs)
         {
-            //return new generation
-            return new List<Chromosome>();
+            
+            var newPop = new List<Chromosome>();
+            foreach (var pair in pairs) {
+                newPop.Add(mate(pop[pair.x], pop[pair.y]));
+            }
+            return newPop;
+        }
+
+        public Chromosome mate(Chromosome father, Chromosome mother)
+        {
+            List<City> child = new List<City>(father.getRoute().Count);
+			var random = new Random();
+
+			do
+            {
+                child.Clear();
+                var splitPoint = random.Next() % (father.getRoute().Count / 2) + father.getRoute().Count / 4;
+
+                for (int i = 0; i < splitPoint; i++)
+                {
+                    child.Add((City)father.getRoute()[i]);
+                }
+                for (int i = splitPoint; i < mother.getRoute().Count; i++)
+                {
+                    child.Add((City)mother.getRoute()[i]);
+                }
+
+                var groups = child.GroupBy(x => x);
+                var duplicates = groups.Where(x => x.Count() > 1).Select(x => x.Key);
+                var used = groups.Select(x => x.Key);
+                var unused = Cities.Intersect(used).OrderBy(x => random.Next());
+                var replaced = 0;
+                child = child.Select(city => duplicates.Contains(city) ? unused.ElementAt(replaced++) : city).ToList(); 
+
+            } while (!isValid(child));
+
+            return new Chromosome(new TSPSolution(new ArrayList(child)));
+        }
+
+        public bool isValid(List<City> c) {
+            for (var i = 0; i < c.Count - 1; i++) {
+
+                if (Double.IsPositiveInfinity(c[i].costToGetTo(c[i + 1]))) {
+                    return false;
+                }
+            }
+            return !Double.IsPositiveInfinity(c[c.Count - 1].costToGetTo(c[0]));
         }
 
         public List<Chromosome> mutate_all(List<Chromosome> pop)
         {
             //return new generation
-            return new List<Chromosome>();
+            int count = pop.Count;//Size wouldn't work since it grows.
+            for(int i = 0; i < count; ++i)
+            {
+                pop.Add(mutateChromosome(pop[i]));
+            }
+            return pop;
+        }
+        private bool invalidNum(double val)
+        {
+            return !(double.IsPositiveInfinity(val) || double.IsNaN(val));
+        }
+        private Chromosome mutateChromosome(Chromosome chromosome)
+        {
+            Chromosome result = new Chromosome(new TSPSolution(chromosome.getRoute()));
+            Random rand = new Random();
+            int max = chromosome.getRoute().Count / 10;
+            if (max < 1) max = 1;
+            int numberOfMutations = rand.Next(1,max);//Dont want too many mutations.
+            //numberOfMutations=(int)Math.Sqrt(numberOfMutations);
+            if (numberOfMutations <= 0) numberOfMutations = 1;
+            int x, y;
+            City cx, cy,swap;
+            ArrayList route = result.getRoute();
+            for (int i = 0; i < numberOfMutations; ++i)
+            {
+                do
+                {        
+                    x = rand.Next(1, route.Count);
+                    y = rand.Next(1, route.Count);
+                    cx = (City)route[x];
+                    cy = (City)route[y];
+                } while (
+                (x!=0&&invalidNum(((City)(route[x-1])).costToGetTo(cy)))|| // x.previous to y
+                invalidNum(cx.costToGetTo((City)Route[y + 1])) || // x to y.next
+                (y!=0&&invalidNum((((City)(route[y-1])).costToGetTo(cx))))|| // y.previous to x
+                invalidNum(cy.costToGetTo((City)Route[x + 1])) // y to x.next
+                );
+                swap = (City)route[x];
+                route[x] = route[y];
+                route[y] = swap;
+            }
+            return result;
         }
 
         public string[] fancySolveProblem()
         {
-            string[] results = new string[3];
-            for (int i = 0; i < Cities.Length; i++)
-            {
+            Stopwatch timer = new Stopwatch();
+            TimeSpan TIMELIMIT = new TimeSpan(0, 0, time_limit/1000);
+            int NUMCHILDREN = 2;
 
-            }
+            int solution_count = 0;
+
+            string[] results = new string[3];
                 
             //Generating initial solutions
             int INITNUM = 10;
@@ -1156,29 +1290,32 @@ namespace TSP
                 defaultSolveProblem();
                 currentpop.Add(new Chromosome(bssf));
             }
-
-            bool done = false; //change to time limit
-            while (!done)
-            {
-
-                //Dice / choosing parents(using dice) (ends up pruning to same number every time)
-                //Pair mates randomly = list of intpairs
-                //Crossover_all
-                //Mutate_all
-                //save best solution
-            }
-
-
-
-
-
             
-
-            // TODO: Add your implementation for your advanced solver here.
-
-            results[COST] = "not implemented";    // load results into array here, replacing these dummy values
-            results[TIME] = "-1";
-            results[COUNT] = "-1";
+            //loop
+            timer.Start();
+            while (timer.Elapsed.CompareTo(TIMELIMIT) <= 0)
+            {
+                currentpop = weighted_dice(currentpop);
+                List<intpair> pairlist = pair_mates(currentpop.Count,NUMCHILDREN);
+                currentpop = crossover_all(currentpop, pairlist);
+                currentpop = mutate_all(currentpop);
+                //need to figure out how to fix the fact that this will save routes that have a chance of getting deleted
+                foreach (Chromosome sol in currentpop)
+                {
+                    if (sol.getFitness() < bssf.costOfRoute())
+                    {
+                        bssf = new TSPSolution(sol.getRoute()); //assuming route is ArrayList of Cities
+                        solution_count++;
+                    }
+                }
+                
+            }
+            timer.Stop();
+            TimeSpan el_time = timer.Elapsed;
+            
+            results[COST] = bssf.costOfRoute().ToString();    
+            results[TIME] = el_time.ToString();
+            results[COUNT] = solution_count.ToString();
 
             return results;
         }
