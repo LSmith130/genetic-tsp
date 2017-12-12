@@ -1241,7 +1241,7 @@ namespace TSP
         }
         private Chromosome mutateChromosome(Chromosome chromosome)
         {
-            Chromosome result = new Chromosome(new TSPSolution(chromosome.getRoute()));
+            TSPSolution result = new TSPSolution(chromosome.getRoute());
             Random rand = new Random();
             int max = chromosome.getRoute().Count / 10;
             if (max < 1) max = 1;
@@ -1250,7 +1250,7 @@ namespace TSP
             if (numberOfMutations <= 0) numberOfMutations = 1;
             int x, y;
             City cx, cy,swap;
-            ArrayList route = result.getRoute();
+            ArrayList route = result.Route;
             for (int i = 0; i < numberOfMutations; ++i)
             {
                 do
@@ -1269,7 +1269,7 @@ namespace TSP
                 route[x] = route[y];
                 route[y] = swap;
             }
-            return result;
+            return new Chromosome(result);
         }
 
         public string[] fancySolveProblem()
