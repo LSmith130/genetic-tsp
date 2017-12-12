@@ -1039,8 +1039,53 @@ namespace TSP
 
         public List<Chromosome> crossover_all(List<Chromosome> pop, List<intpair> pairs)
         {
-            //return new generation
-            return new List<Chromosome>();
+            
+            var newPop = new List<Chromosome>();
+            foreach (var pair in pairs) {
+                newPop.Add(mate(pop[pair.x], pop[pair.y]));
+            }
+            return newPop;
+        }
+
+        public Chromosome mate(Chromosome father, Chromosome mother)
+        {
+            List<City> child = new List<City>(father.route.Count);
+			var random = new Random();
+
+			do
+            {
+                child.Clear();
+                var splitPoint = random.Next() % (father.route.Count / 2) + father.route.Count / 4;
+
+                for (int i = 0; i < splitPoint; i++)
+                {
+                    child.Add((City)father.route[i]);
+                }
+                for (int i = splitPoint; i < mother.route.Count; i++)
+                {
+                    child.Add((City)mother.route[i]);
+                }
+
+                var groups = child.GroupBy(x => x);
+                var duplicates = groups.Where(x => x.Count() > 1).Select(x => x.Key);
+                var used = groups.Select(x => x.Key);
+                var unused = Cities.Intersect(used).OrderBy(x => random.Next());
+                var replaced = 0;
+                child = child.Select(city => duplicates.Contains(city) ? unused.ElementAt(replaced++) : city).ToList(); 
+
+            } while (!isValid(child));
+
+            return new Chromosome(new TSPSolution(new ArrayList(child)));
+        }
+
+        public bool isValid(List<City> c) {
+            for (var i = 0; i < c.Count - 1; i++) {
+
+                if (Double.IsPositiveInfinity(c[i].costToGetTo(c[i + 1]))) {
+                    return false;
+                }
+            }
+            return !Double.IsPositiveInfinity(c[c.Count - 1].costToGetTo(c[0]));
         }
 
         public List<Chromosome> mutate_all(List<Chromosome> pop)
