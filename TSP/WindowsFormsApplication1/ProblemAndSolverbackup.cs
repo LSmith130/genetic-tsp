@@ -1095,21 +1095,21 @@ namespace TSP
 
         public Chromosome mate(Chromosome father, Chromosome mother)
         {
-            List<City> child = new List<City>(father.route.Count);
+            List<City> child = new List<City>(father.getRoute().Count);
 			var random = new Random();
 
 			do
             {
                 child.Clear();
-                var splitPoint = random.Next() % (father.route.Count / 2) + father.route.Count / 4;
+                var splitPoint = random.Next() % (father.getRoute().Count / 2) + father.getRoute().Count / 4;
 
                 for (int i = 0; i < splitPoint; i++)
                 {
-                    child.Add((City)father.route[i]);
+                    child.Add((City)father.getRoute()[i]);
                 }
-                for (int i = splitPoint; i < mother.route.Count; i++)
+                for (int i = splitPoint; i < mother.getRoute().Count; i++)
                 {
-                    child.Add((City)mother.route[i]);
+                    child.Add((City)mother.getRoute()[i]);
                 }
 
                 var groups = child.GroupBy(x => x);

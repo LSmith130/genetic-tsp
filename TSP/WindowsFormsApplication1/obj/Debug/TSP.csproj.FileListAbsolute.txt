@@ -1,31 +1,43 @@
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\obj\Debug\TSP.csprojResolveAssemblyReference.cache
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\obj\Debug\TSP.mainform.resources
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\obj\Debug\TSP.csproj.GenerateResource.Cache
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
-C:\Users\Dan\Desktop\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\obj\Debug\TSP.csprojResolveAssemblyReference.cache
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\obj\Debug\TSP.mainform.resources
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\obj\Debug\TSP.csproj.GenerateResource.Cache
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\bin\Debug\C5.dll
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\TSP\WindowsFormsApplication1\bin\Debug\C5.xml
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\bin\Debug\C5.dll
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\bin\Debug\C5.xml
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\obj\Debug\TSP.csprojResolveAssemblyReference.cache
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\obj\Debug\TSP.mainform.resources
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
-C:\Users\aet_a\OneDrive\Documents\BYU\2017b Fall\CS 312\genetic-tsp\TSP\WindowsFormsApplication1\obj\Debug\TSP.csproj.GenerateResource.Cache
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe.config
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.exe
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.pdb
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/obj/Debug/TSP.csprojResolveAssemblyReference.cache
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/obj/Debug/TSP.mainform.resources
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.Properties.Resources.resources
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/obj/Debug/TSP.csproj.GenerateResource.Cache
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe
+C:/Users/Dan/Desktop/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.pdb
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe.config
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.exe
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.pdb
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.pdb
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/obj/Debug/TSP.csprojResolveAssemblyReference.cache
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/obj/Debug/TSP.mainform.resources
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.Properties.Resources.resources
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/obj/Debug/TSP.csproj.GenerateResource.Cache
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/bin/Debug/C5.dll
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/TSP/WindowsFormsApplication1/bin/Debug/C5.xml
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe.config
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.exe
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.pdb
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.pdb
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/C5.dll
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/C5.xml
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/TSP.csprojResolveAssemblyReference.cache
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/TSP.mainform.resources
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.Properties.Resources.resources
+C:/Users/aet_a/OneDrive/Documents/BYU/2017b Fall/CS 312/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/TSP.csproj.GenerateResource.Cache
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe.config
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.exe
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/WindowsFormsApplication1.pdb
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/C5.dll
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/bin/Debug/C5.xml
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/TSP.csprojResolveAssemblyReference.cache
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/TSP.mainform.resources
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.Properties.Resources.resources
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/TSP.csproj.GenerateResource.Cache
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/TSP.csproj.CoreCompileInputs.cache
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.exe
+/Users/Landon/Code/genetic-tsp/TSP/WindowsFormsApplication1/obj/Debug/WindowsFormsApplication1.pdb
