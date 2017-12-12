@@ -1089,7 +1089,12 @@ namespace TSP
                     y = rand.Next(1, route.Count);
                     cx = (City)route[x];
                     cy = (City)route[y];
-                } while (invalidNum(cx.costToGetTo((City)Route[y + 1])) || invalidNum(cy.costToGetTo((City)Route[x + 1])));
+                } while (
+                (x!=0&&invalidNum(((City)(route[x-1])).costToGetTo(cy)))|| // x.previous to y
+                invalidNum(cx.costToGetTo((City)Route[y + 1])) || // x to y.next
+                (y!=0&&invalidNum((((City)(route[y-1])).costToGetTo(cx))))|| // y.previous to x
+                invalidNum(cy.costToGetTo((City)Route[x + 1])) // y to x.next
+                );
                 swap = (City)route[x];
                 route[x] = route[y];
                 route[y] = swap;
