@@ -1179,7 +1179,7 @@ namespace TSP
             foreach (var pair in pairs) {
                 newPop.Add(mate(pop[pair.x], pop[pair.y]));
             }
-            return newPop;
+            return newPop.Concat(pop).ToList();
         }
 
         public Chromosome mate(Chromosome father, Chromosome mother)
