@@ -1042,11 +1042,45 @@ namespace TSP
                 this.x = x;
                 this.y = y;
             }
+
         }
 
-        public List<intpair> pair_mates(int size)
+        public List<intpair> pair_mates(int size, int numchildren)
         {
-            return new List<intpair>();
+            //brain dead check for threshold for maintaining unique pairs
+            if (numchildren > size / 2)
+            {
+                return null;
+            }
+            Random rand = new Random();
+            List<intpair> pairs = new List<intpair>();
+            for(int i = 0; i < size; i++)
+            {
+                for(int j = 0; j < numchildren; j++)
+                {
+                    int mate = rand.Next(size - 1);
+                    intpair pair = new intpair(i, mate);
+                    while (mate == i || pairs.Contains(pair)) { //need to implement intpair as iComparable
+                        //Console.WriteLine("invalid");
+                        mate = rand.Next(size - 1);
+                        pair = new intpair(i, mate);
+                    }
+                    pairs.Add(pair);
+                }
+            }
+
+            //for testing
+            /*
+            Console.WriteLine("pairs");
+            foreach (intpair p in pairs)
+            {
+                int x = p.x;
+                int y = p.y;
+                Console.WriteLine(x.ToString() + " " + y.ToString());
+            }
+            */
+            return pairs;
+            
         }
 
         public List<Chromosome> crossover_all(List<Chromosome> pop, List<intpair> pairs)
@@ -1105,7 +1139,8 @@ namespace TSP
         public string[] fancySolveProblem()
         {
             Stopwatch timer = new Stopwatch();
-            TimeSpan TIMELIMIT = new TimeSpan(0, 0, 60);
+            TimeSpan TIMELIMIT = new TimeSpan(0, 0, time_limit/1000);
+            int NUMCHILDREN = 2;
 
             int solution_count = 0;
 
@@ -1119,13 +1154,13 @@ namespace TSP
                 defaultSolveProblem();
                 currentpop.Add(new Chromosome(bssf));
             }
-
+            
             //loop
             timer.Start();
             while (timer.Elapsed.CompareTo(TIMELIMIT) <= 0)
             {
                 currentpop = weighted_dice(currentpop);
-                List<intpair> pairlist = pair_mates(currentpop.Count);
+                List<intpair> pairlist = pair_mates(currentpop.Count,NUMCHILDREN);
                 currentpop = crossover_all(currentpop, pairlist);
                 currentpop = mutate_all(currentpop);
                 //need to figure out how to fix the fact that this will save routes that have a chance of getting deleted
@@ -1139,7 +1174,6 @@ namespace TSP
                 }
                 
             }
-
             timer.Stop();
             TimeSpan el_time = timer.Elapsed;
             
