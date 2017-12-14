@@ -1276,7 +1276,7 @@ namespace TSP
 		}
 		private bool invalidNum(double val)
 		{
-			return !(double.IsPositiveInfinity(val) || double.IsNaN(val));
+            return (double.IsPositiveInfinity(val) || double.IsNaN(val));
 		}
 		private Chromosome mutateChromosome(Chromosome chromosome)
 		{
@@ -1288,7 +1288,7 @@ namespace TSP
 													  //numberOfMutations=(int)Math.Sqrt(numberOfMutations);
 			if (numberOfMutations <= 0) numberOfMutations = 1;
 			int x, y;
-			City cx, cy, swap;
+			City cx, cy, swap, cxP, cxA, cyP, cyA;
 			ArrayList route = result.getRoute();
 			for (int i = 0; i < numberOfMutations; ++i)
 			{
@@ -1298,11 +1298,15 @@ namespace TSP
 					y = rand.Next(1, route.Count);
 					cx = (City)route[x];
 					cy = (City)route[y];
+					cxP = (x != 0) ? (City)(route[x - 1]) : (City)(route[route.Count - 1]);
+					cxA = (x != route.Count - 1) ? (City)(route[x + 1]) : (City)(route[0]);
+					cyP = (y != 0) ? (City)(route[y - 1]) : (City)(route[route.Count - 1]);
+					cyA = (y != route.Count - 1) ? (City)(route[y + 1]) : (City)(route[0]);
 				} while (
-				(x != 0 && invalidNum(((City)(route[x - 1])).costToGetTo(cy))) || // x.previous to y
-				invalidNum(cx.costToGetTo((City)Route[y + 1])) || // x to y.next
-				(y != 0 && invalidNum((((City)(route[y - 1])).costToGetTo(cx)))) || // y.previous to x
-				invalidNum(cy.costToGetTo((City)Route[x + 1])) // y to x.next
+				invalidNum(cxP.costToGetTo(cy)) || // x.previous to y
+				invalidNum(cx.costToGetTo(cyA)) || // x to y.next
+				invalidNum(cyP.costToGetTo(cx)) || // y.previous to x
+				invalidNum(cy.costToGetTo(cxA)) // y to x.next
 				);
 				swap = (City)route[x];
 				route[x] = route[y];
