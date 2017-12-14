@@ -1199,7 +1199,11 @@ namespace TSP
 
 			foreach (var pair in pairs)
 			{
-				pop.Add(mate(pop[pair.x], pop[pair.y]));
+				var child = mate(pop[pair.x], pop[pair.y]);
+				if (child != null)
+				{
+					pop.Add(child);
+				}
 			}
 			return pop;
 		}
@@ -1208,11 +1212,11 @@ namespace TSP
 		{
 			List<City> child = new List<City>(father.getRoute().Count);
 			var random = new Random();
-
+			int attempts = 0;
 			do
 			{
 				child.Clear();
-				var splitPoint = random.Next() % (father.getRoute().Count / 2) + father.getRoute().Count / 4;
+				var splitPoint = random.Next() % (father.getRoute().Count);
 
 				for (int i = 0; i < splitPoint; i++)
 				{
@@ -1223,35 +1227,67 @@ namespace TSP
 					child.Add((City)mother.getRoute()[i]);
 				}
 
-				var groups = child.Select((x, i) => new { index = i, city = x }).GroupBy(x => x.city);
-				var duplicates = groups.Where(x => x.Count() > 1).Select(group => group.First().index).ToList();
-				var used = groups.Select(x => x.Key);
-				var unused = Cities.Except(used).OrderBy(x => random.Next());
+				child = replaceDuplicates(child);
 
-				foreach (var index in duplicates)
+				attempts++;
+
+				if (attempts > 3000)
 				{
-					child.RemoveAt(index);
-					child.Insert(index, unused.ElementAt(0));
+					return null;
 				}
-
-				//child = child.Select(city =>
-				//{
-				//  var duplicateIndex = duplicates.IndexOf(city);
-				//  if (duplicateIndex != -1)
-				//  {
-				//      duplicates.RemoveAt(duplicateIndex);
-				//      return 
-				//  }
-				//  return city;
-				//}).ToList();
 
 			} while (!isValid(child));
 
 			return new Chromosome(new TSPSolution(new ArrayList(child)));
 		}
 
+		public List<City> replaceDuplicates(List<City> child)
+		{
+
+			var groups = child.Select((x, i) => new { index = i, city = x }).GroupBy(x => x.city);
+			var duplicates = groups.Where(x => x.Count() > 1).Select(group => group.First().index).ToList();
+			var used = groups.Select(x => x.Key);
+			var unused = Cities.Except(used).OrderBy(x => rnd.Next()).ToList();
+
+			foreach (var i in duplicates)
+			{
+				for (var j = 0; j < unused.Count(); j++)
+				{
+					bool isValid = true;
+					if (i > 0)
+					{
+						isValid = isValid && !double.IsPositiveInfinity(child[i - 1].costToGetTo(unused[j]));
+					}
+					else
+					{
+						isValid = isValid && !double.IsPositiveInfinity(child[child.Count() - 1].costToGetTo(unused[j]));
+					}
+					if (i < child.Count())
+					{
+						isValid = isValid && !double.IsPositiveInfinity(unused[j].costToGetTo(child[i + 1]));
+					}
+					else
+					{
+						isValid = isValid && !double.IsPositiveInfinity(unused[j].costToGetTo(child[0]));
+					}
+					if (isValid)
+					{
+						child.RemoveAt(i);
+						child.Insert(i, unused[j]);
+						break;
+					}
+				}
+			}
+
+			return child;
+		}
+
 		public bool isValid(List<City> c)
 		{
+			if (c.GroupBy(x => x).Any(x => x.Count() > 1))
+			{
+				return false;
+			}
 
 			for (var i = 0; i < c.Count - 1; i++)
 			{
@@ -1268,15 +1304,15 @@ namespace TSP
 		{
 			//return new generation
 			int count = pop.Count;//Size wouldn't work since it grows.
-			for(int i = 0; i < count; ++i)
+			for (int i = 0; i < count; ++i)
 			{
-			    pop.Add(mutateChromosome(pop[i]));
+				pop.Add(mutateChromosome(pop[i]));
 			}
 			return pop;
 		}
 		private bool invalidNum(double val)
 		{
-            return (double.IsPositiveInfinity(val) || double.IsNaN(val));
+			return (double.IsPositiveInfinity(val) || double.IsNaN(val));
 		}
 		private Chromosome mutateChromosome(Chromosome chromosome)
 		{
