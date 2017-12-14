@@ -1073,7 +1073,7 @@ namespace TSP
 			Random random = new Random();
 
 			int size = solutions.Count;
-			if (size <= 10)
+			if (size <= returnNumber)
 			{
 				return SortedList;
 			}
@@ -1231,7 +1231,7 @@ namespace TSP
 
 				attempts++;
 
-				if (attempts > 3000)
+				if (attempts > 100)
 				{
 					return null;
 				}
@@ -1355,14 +1355,14 @@ namespace TSP
 		{
 			Stopwatch timer = new Stopwatch();
 			TimeSpan TIMELIMIT = new TimeSpan(0, 0, time_limit / 1000);
-			int NUMCHILDREN = 2;
+			int NUMCHILDREN = 3;
 
 			int solution_count = 0;
 
 			string[] results = new string[3];
 
 			//Generating initial solutions
-			int INITNUM = 10;
+			int INITNUM = 500;
 			List<Chromosome> currentpop = new List<Chromosome>();
 			for (int i = 0; i < INITNUM; i++)
 			{
